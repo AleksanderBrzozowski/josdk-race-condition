@@ -27,13 +27,14 @@ class MyResourceReconcilerTest {
 
         Thread.sleep(5)
 
+        // delete the primary, and wait until it is deleted
         client.resources(MyCustomResource::class.java)
             .inNamespace("default")
             .withName("test")
             .withTimeout(5, TimeUnit.SECONDS)
             .delete()
 
-        // there should be no config map
+        // there should be no ConfigMap left (it should be deleted when primary was deleted)
         Assertions.assertNull(getConfigMap())
     }
 
